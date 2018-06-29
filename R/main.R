@@ -207,3 +207,44 @@ get_similar_websites <- function(api_key, domain, start_month, end_month) {
   response
 }
 
+#' Format similar websites response
+#'
+#' @param response the \code{curl} object recieved as a response from \code{get_similar_websites}
+#'
+#' @return \code{data.frame} with domain, status_code, similar websites list, category, category rank and timestamp
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' format_visits(response =
+#'   get_visits("my_email", token = "my_token", domain = "facebook.com"))
+#' }
+format_similar_websites <- function(response) {
+
+  # request failed
+  if (response$status_code > 200) {
+    cat("\nprevious response failed!\n")
+    failed_response <- data.frame(domain = response$domain,
+                                  status = response$status_code,
+                                  url = NA,
+                                  score = NA,
+                                  category = NA,
+                                  category_rank = NA,
+                                  timestamp = Sys.time())
+    return(failed_response)
+  }
+
+  df <- fromJSON(rawToChar(response$content), simplifyDataFrame = TRUE, flatten = TRUE)
+  similar_sites <- df$similar_sites
+  similar_sites$status <- df$meta$status
+  similar_sites$domain <- df$meta$request$domain
+  similar_sites$category <- df$category
+  similar_sites$category_rank <- df$category_ranking
+  similar_sites$timestamp <- Sys.time()
+
+  # reorder columns
+  similar_sites <- similar_sites[c("domain", "status", "url", "score", "category", "category_rank", "timestamp" )]
+  similar_sites
+}
+
