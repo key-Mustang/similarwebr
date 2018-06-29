@@ -1,0 +1,17 @@
+Package: similarwebr
+Type: Package
+Title: R client for Similarweb API
+Version: 0.1.0
+Author: DSG
+Maintainer: <shaul.ab@hotmail.com>
+Description: Minimalistic R client for Similarweb API
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Imports:
+    curl,
+    jsonlite
+Suggests: 
+    testthat
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 6.0.1
