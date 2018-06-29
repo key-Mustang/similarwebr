@@ -173,7 +173,7 @@ get_rank_and_reach <- function(api_key, domain) {
 
 
 
-#' Get rank and reach
+#' Get similar websites
 #'
 #' @param api_key similarweb API key
 #' @param domain domain of interest, do not include schemas like `www.` or `https:`

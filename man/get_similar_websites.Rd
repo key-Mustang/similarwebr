@@ -2,7 +2,7 @@
 % Please edit documentation in R/main.R
 \name{get_similar_websites}
 \alias{get_similar_websites}
-\title{Get rank and reach}
+\title{Get similar websites}
 \usage{
 get_similar_websites(api_key, domain, start_month, end_month)
 }
@@ -19,7 +19,7 @@ get_similar_websites(api_key, domain, start_month, end_month)
 The \code{curl} object with overall 40 most similar sites, global ranking, category, and category ranking
 }
 \description{
-Get rank and reach
+Get similar websites
 }
 \examples{
 \dontrun{
