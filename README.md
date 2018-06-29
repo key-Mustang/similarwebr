@@ -13,14 +13,16 @@
   
   + `get_visits()` - retrieves traffic info about the domain [link](https://www.similarweb.com/corp/developer/estimated_visits_api)
   + `get_category_rank()` - retrieves the category rank of the domain [link]()  
-  + `get_rank_and_reach()` - retrieves the domain rank and reach [link](https://www.similarweb.com/corp/developer/rank_reach)
+  + `get_rank_and_reach()` - retrieves the domain rank and reach [link](https://www.similarweb.com/corp/developer/rank_reach)  
+  + `get_similar_websites()` - retrieves 40 most similar websites [link](https://www.similarweb.com/corp/developer/similar_websites_api)
 
 <br>
 
   **Formatting functions:**
   
-  + `format_visits()` - formats the `get_visits()` response into a data.frame
-  + `format_category_rank()` - formatting for the `get_category_rank()` response
+  + `format_visits()` - formats the `get_visits()` response into a data.frame  
+  + `format_category_rank()` - formatting for the `get_category_rank()` response  
+  + `format_similar_websites()` - formatting for the `get_similar_websites()` response
   
 <br><br>
 
@@ -158,6 +160,40 @@ JSON output should be similar to this:
   ...
   ...
   ... 
+}
+```
+
+<br><br>
+
+### `get_similar_websites`
+
+Similar Websites API input for "google.com"
+
+```
+get_similar_websites(api_key = "my_api_key", domain = "google.com", start_month = "2016-11", end_month = "2016-12")
+```
+
+JSON output should be similar to this:
+
+```
+{
+ "similar_sites":[
+  {
+  "url":"googleblog.blogspot.com",
+  "score":0.99995037171524026
+  },
+  {
+  "url":"yahoo.com",
+  "score":0.999742882067614
+  },
+  {
+  "url":"technorati.com",
+  "score":0.97864855460955635
+  },
+...
+...
+...
+ 
 }
 ```
 

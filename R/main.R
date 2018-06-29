@@ -171,3 +171,80 @@ get_rank_and_reach <- function(api_key, domain) {
   response
 }
 
+
+
+#' Get similar websites
+#'
+#' @param api_key similarweb API key
+#' @param domain domain of interest, do not include schemas like `www.` or `https:`
+#' @param start_month date in the format YYYY-MM
+#' @param end_month date in the format YYYY-MM
+#'
+#' @return The \code{curl} object with overall 40 most similar sites, global ranking, category, and category ranking
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' get_similar_websites(api_key = "my_api_key", domain = "coinmarketcap.com", start_month = "2018-01", end_month = "2018-02")
+#' }
+get_similar_websites <- function(api_key, domain, start_month, end_month) {
+
+  request = paste0("https://api.similarweb.com/v1/website/", domain,
+                   "/similar-sites/similarsites?api_key=", api_key,
+                   "&start_date=", start_month,
+                   "&end_date=", end_month)
+
+  response <- curl::curl_fetch_memory(request)
+  code <- response$status_code
+
+  if (code == 200){
+    cat("\nrequest sent successfuly")
+  } else {
+    return(list("domain" = domain, "status_code" = code, "timestamp" = Sys.time()))
+  }
+
+  response
+}
+
+#' Format similar websites response
+#'
+#' @param response the \code{curl} object recieved as a response from \code{get_similar_websites}
+#'
+#' @return \code{data.frame} with domain, status_code, similar websites list, category, category rank and timestamp
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' format_visits(response =
+#'   get_visits("my_email", token = "my_token", domain = "facebook.com"))
+#' }
+format_similar_websites <- function(response) {
+
+  # request failed
+  if (response$status_code > 200) {
+    cat("\nprevious response failed!\n")
+    failed_response <- data.frame(domain = response$domain,
+                                  status = response$status_code,
+                                  url = NA,
+                                  score = NA,
+                                  category = NA,
+                                  category_rank = NA,
+                                  timestamp = Sys.time())
+    return(failed_response)
+  }
+
+  df <- fromJSON(rawToChar(response$content), simplifyDataFrame = TRUE, flatten = TRUE)
+  similar_sites <- df$similar_sites
+  similar_sites$status <- df$meta$status
+  similar_sites$domain <- df$meta$request$domain
+  similar_sites$category <- df$category
+  similar_sites$category_rank <- df$category_ranking
+  similar_sites$timestamp <- Sys.time()
+
+  # reorder columns
+  similar_sites <- similar_sites[c("domain", "status", "url", "score", "category", "category_rank", "timestamp" )]
+  similar_sites
+}
+
