@@ -171,3 +171,39 @@ get_rank_and_reach <- function(api_key, domain) {
   response
 }
 
+
+
+#' Get rank and reach
+#'
+#' @param api_key similarweb API key
+#' @param domain domain of interest, do not include schemas like `www.` or `https:`
+#' @param start_month date in the format YYYY-MM
+#' @param end_month date in the format YYYY-MM
+#'
+#' @return The \code{curl} object with overall 40 most similar sites, global ranking, category, and category ranking
+#'
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' get_similar_websites(api_key = "my_api_key", domain = "coinmarketcap.com", start_month = "2018-01", end_month = "2018-02")
+#' }
+get_similar_websites <- function(api_key, domain, start_month, end_month) {
+
+  request = paste0("https://api.similarweb.com/v1/website/", domain,
+                   "/similar-sites/similarsites?api_key=", api_key,
+                   "&start_date=", start_month,
+                   "&end_date=", end_month)
+
+  response <- curl::curl_fetch_memory(request)
+  code <- response$status_code
+
+  if (code == 200){
+    cat("\nrequest sent successfuly")
+  } else {
+    return(list("domain" = domain, "status_code" = code, "timestamp" = Sys.time()))
+  }
+
+  response
+}
+
