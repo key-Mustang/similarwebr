@@ -27,6 +27,10 @@ Get domain visits
 }
 \examples{
 \dontrun{
-get_visits(api_key = "my_api_key", domain = "cnn.com", start = "01-2016", end = "03-2016", gr = "monthly")
+get_visits(api_key = "my_api_key",
+           domain = "cnn.com",
+           start = "01-2016",
+           end = "03-2016",
+           gr = "monthly")
 }
 }
