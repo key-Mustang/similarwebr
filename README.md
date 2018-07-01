@@ -12,17 +12,16 @@
   **Retrieval functions:**
   
   + `get_visits()` - retrieves traffic info about the domain [link](https://www.similarweb.com/corp/developer/estimated_visits_api)
-  + `get_category_rank()` - retrieves the category rank of the domain [link]()  
-  + `get_rank_and_reach()` - retrieves the domain rank and reach [link](https://www.similarweb.com/corp/developer/rank_reach)  
+  + `get_category_rank()` - retrieves the category rank of the domain [link](https://www.similarweb.com/corp/developer/category_rank_api)  
   + `get_similar_websites()` - retrieves 40 most similar websites [link](https://www.similarweb.com/corp/developer/similar_websites_api)
 
 <br>
 
   **Formatting functions:**
   
-  + `format_visits()` - formats the `get_visits()` response into a data.frame  
+  + `format_visits()` - formatting for the `get_visits()` response  
   + `format_category_rank()` - formatting for the `get_category_rank()` response  
-  + `format_similar_websites()` - formatting for the `get_similar_websites()` response
+  + `format_similar_websites()` - formatting for the `get_similar_websites()` response  
   
 <br><br>
 
@@ -95,76 +94,6 @@ JSON output should be similar to this:
 <br><br>
 
 
-### `get_rank_and_reach`
-
-Google.com Rank & Reach API input
-
-```
-get_rank_and_reach(api_key = "my_api_key", domain = "google.com")
-```
-
-JSON output should be similar to this:
-
-```
-{ 
- GlobalRank: 2,   
- 
- //CountryCode is the domain's most popular country and 
- //CountryRank is its rank in that country
- CountryCode: 840,
- CountryRank: 2,
-
- //TopCountryShares shows the top countries that bring
- //the most traffic to the domain and their share of
- //traffic in percent
-  {
-   CountryCode: 840,
-   TrafficShare: 0.527661729864217
-  },
-  {
-   CountryCode: 356,
-   TrafficShare: 0.0530084518715688
-  },
-...
-...
-...
-
-//TrafficReach displays 26 dates over the last
-//6 months and the estimated percentage of
-//internet users who visited the domain on
-//that date (DD/MM/YYYY)
-  {
-   Date: "01/09/2012",
-   Value: 0.227856776500789
-  },
-  {
-   CountryCode: 356,
-   TrafficShare: 0.0530084518715688
-  },
-  ...
-  ...
-  ...
-//TrafficShares displays the source distribution
-//of traffic for the most recent month.
-  {
-   "SourceType": "Search",
-   "SourceValue": 0.1352821703509324
-  },
-  {
-   "SourceType": "Social",
-   "SourceValue": 0.0493687569141767
-  },
-  {
-   "SourceType": "Mail",
-   "SourceValue": 0.0014070432674325017
-  ...
-  ...
-  ... 
-}
-```
-
-<br><br>
-
 ### `get_similar_websites`
 
 Similar Websites API input for "google.com"
@@ -196,6 +125,7 @@ JSON output should be similar to this:
  
 }
 ```
+
 
 <br><br>
 

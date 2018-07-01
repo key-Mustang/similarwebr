@@ -23,6 +23,9 @@ Get similar websites
 }
 \examples{
 \dontrun{
-get_similar_websites(api_key = "my_api_key", domain = "coinmarketcap.com", start_month = "2018-01", end_month = "2018-02")
+get_similar_websites(api_key = "my_api_key",
+                     domain = "coinmarketcap.com",
+                     start_month = "2018-01",
+                     end_month = "2018-02")
 }
 }

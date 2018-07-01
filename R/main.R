@@ -13,7 +13,11 @@
 #'
 #' @examples
 #' \dontrun{
-#' get_visits(api_key = "my_api_key", domain = "cnn.com", start = "01-2016", end = "03-2016", gr = "monthly")
+#' get_visits(api_key = "my_api_key",
+#'            domain = "cnn.com",
+#'            start = "01-2016",
+#'            end = "03-2016",
+#'            gr = "monthly")
 #' }
 get_visits <- function(api_key, domain, start, end, gr, md = "False") {
 
@@ -137,40 +141,7 @@ format_category_rank <- function(response) {
 
   # return format: domain,category,category_rank,timestamp
   data.frame(status = df$meta$status, domain = df$meta$request$domain, category = df$category, category_rank = df$rank, timestamp = Sys.time())
-
 }
-
-
-#' Get rank and reach
-#'
-#' @param api_key similarweb API key
-#' @param domain domain of interest, do not include schemas like `www.` or `https:`
-#'
-#' @return The \code{curl} object with overall \code{rank} and reach information
-#'
-#' @export
-#'
-#' @examples
-#' \dontrun{
-#' get_rank_and_reach(api_key = "my_api_key", domain = "google.com")
-#' }
-get_rank_and_reach <- function(api_key, domain) {
-
-  request = paste0("https://api.similarweb.com/Site/", domain,
-                   "/v1/traffic?Format=JSON&UserKey=", api_key)
-
-  response <- curl::curl_fetch_memory(request)
-  code <- response$status_code
-
-  if (code == 200){
-    cat("\nrequest sent successfuly")
-  } else {
-    return(list("domain" = domain, "status_code" = code, "timestamp" = Sys.time()))
-  }
-
-  response
-}
-
 
 
 #' Get similar websites
@@ -180,13 +151,16 @@ get_rank_and_reach <- function(api_key, domain) {
 #' @param start_month date in the format YYYY-MM
 #' @param end_month date in the format YYYY-MM
 #'
-#' @return The \code{curl} object with overall 40 most similar sites, global ranking, category, and category ranking
+#' @return The \code{curl} object with 40 most similar sites, global ranking, category, and category ranking
 #'
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#' get_similar_websites(api_key = "my_api_key", domain = "coinmarketcap.com", start_month = "2018-01", end_month = "2018-02")
+#' get_similar_websites(api_key = "my_api_key",
+#'                      domain = "coinmarketcap.com",
+#'                      start_month = "2018-01",
+#'                      end_month = "2018-02")
 #' }
 get_similar_websites <- function(api_key, domain, start_month, end_month) {
 
@@ -235,7 +209,7 @@ format_similar_websites <- function(response) {
     return(failed_response)
   }
 
-  df <- fromJSON(rawToChar(response$content), simplifyDataFrame = TRUE, flatten = TRUE)
+  df <- jsonlite::fromJSON(rawToChar(response$content), simplifyDataFrame = TRUE, flatten = TRUE)
   similar_sites <- df$similar_sites
   similar_sites$status <- df$meta$status
   similar_sites$domain <- df$meta$request$domain
